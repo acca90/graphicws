@@ -22,9 +22,36 @@ var Main = (function($){
         });
     };
     /**
+     * Consulta Ajax;
+     */
+    var consulta = function ( param ) {
+        cleanError();
+        $.ajax({
+            url: param.url,
+            method: 'get',
+            success: param.success,
+            error: defaultError
+        })
+    };
+    /**
+     * Default Error
+     */
+    var defaultError = function () {
+        $('#errorBand').show();
+        $('#errorMsg').html("Falha ao consultar Web Service");
+    };
+    /**
+     * Clean error
+     */
+    var cleanError = function () {
+        $('#errorBand').hide();
+        $('#errorMsg').html("");
+    };
+    /**
      * Métodos públicos
      */
     return {
-        init: init
+        init: init,
+        consulta: consulta
     };
 })(jQuery);
