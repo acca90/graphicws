@@ -4,21 +4,21 @@
  * @author Matheus
  * @since 07/06/2018
  */
-let Main = (function($){
+var Main = (function($){
     /**
      * Container principal do DOM
      * @type {*|HTMLElement}
      */
-    let $cointainer = $('#container');
+    var $cointainer = $('#container');
     /**
      * Inicialização do módulo
      */
-    let init = function () {
+    var init = function () {
         $('#graph1Link').on('click', function () {
-            $cointainer.load('grafico1.html');
+            $cointainer.load('companies.html');
         });
         $('#graph2Link').on('click', function () {
-            $cointainer.load('grafico2.html');
+            $cointainer.load('SegundoGrafico.html');
         });
     };
     /**

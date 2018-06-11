@@ -4,11 +4,11 @@
  * @author Matheus
  * @since 07/06/2018
  */
-let Grafico2 = (function($){
+var SegundoGrafico = (function($){
     /**
      * Inicialização do módulo
      */
-    let init = function () {
+    var init = function () {
         Plotly.d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/api_docs/mt_bruno_elevation.csv', function(err, rows){
             function unpack(rows, key) {
                 return rows.map(function(row) { return row[key]; });

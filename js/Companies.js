@@ -4,11 +4,11 @@
  * @author Matheus
  * @since 07/06/2018
  */
-let Grafico1 = (function($){
+var Companies = (function($){
     /**
      * Inicialização do módulo
      */
-    let init = function () {
+    var init = function () {
         TESTER = document.getElementById('tester');
         Plotly.plot(
             TESTER, [
