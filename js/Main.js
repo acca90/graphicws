@@ -20,6 +20,9 @@ var Main = (function($){
         $('#graph2Link').on('click', function () {
             $cointainer.load('HistoricoTrimestral.html');
         });
+        $('#graph3Link').on('click', function () {
+            $cointainer.load('economicInfo.html');
+        });
     };
     /**
      * Converte Json to CSV
