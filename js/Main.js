@@ -18,8 +18,26 @@ var Main = (function($){
             $cointainer.load('companies.html');
         });
         $('#graph2Link').on('click', function () {
-            $cointainer.load('SegundoGrafico.html');
+            $cointainer.load('HistoricoTrimestral.html');
         });
+    };
+    /**
+     * Converte Json to CSV
+     * @param objArray
+     * @returns {string}
+     */
+    var parseCsv = function (objArray ) {
+        var array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
+        var str = '';
+        for (var i = 0; i < array.length; i++) {
+            var line = '';
+            for (var index in array[i]) {
+                if (line !== '') line += ','
+                line += array[i][index];
+            }
+            str += line + '\r\n';
+        }
+        return str;
     };
     /**
      * Consulta Ajax;
@@ -41,6 +59,13 @@ var Main = (function($){
         $('#errorMsg').html("Falha ao consultar Web Service");
     };
     /**
+     * Default Error
+     */
+    var msgError = function ( msg ) {
+        $('#errorBand').show();
+        $('#errorMsg').html(msg);
+    };
+    /**
      * Clean error
      */
     var cleanError = function () {
@@ -52,6 +77,9 @@ var Main = (function($){
      */
     return {
         init: init,
-        consulta: consulta
+        consulta: consulta,
+        parseCsv: parseCsv,
+        msgError: msgError,
+        source: 'cadedd8a538bb6b4'
     };
 })(jQuery);
