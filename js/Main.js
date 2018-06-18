@@ -15,13 +15,16 @@ var Main = (function($){
      */
     var init = function () {
         $('#graph1Link').on('click', function () {
-            $cointainer.load('companies.html');
+            $cointainer.load('BolsaValores.html');
         });
         $('#graph2Link').on('click', function () {
             $cointainer.load('HistoricoTrimestral.html');
         });
         $('#graph3Link').on('click', function () {
             $cointainer.load('economicInfo.html');
+        });
+        $('#graph4Link').on('click', function () {
+            $cointainer.load('BolsaValores.html');
         });
     };
     /**
@@ -83,6 +86,6 @@ var Main = (function($){
         consulta: consulta,
         parseCsv: parseCsv,
         msgError: msgError,
-        source: 'cadedd8a538bb6b4'
+        source: '6c0f906945618c79'
     };
 })(jQuery);

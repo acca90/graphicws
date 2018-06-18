@@ -11,7 +11,7 @@ var HistoricoTrimestral = (function($){
      */
     var init = function () {
         Main.consulta({
-            url: 'https://markets.ft.com/research/webservices/companies/v1/financialperformance?symbols=AAPL,MSFT,GOOGL,ORCL,ADBE,TWTR&period=a&numHistorical=400&source=' + Main.source,
+            url: 'https://markets.ft.com/research/webservices/companies/v1/financialperformance?symbols=MSFT,IQ,AAPL,CMCSA,CSCO,MU,QQQ,INTC,SIRI,JD,AMAT,ENDP,FB,NAVI,DBX,FOXA,GERN,SQQQ,CZR,HBAN&period=a&numHistorical=400&source=' + Main.source,
             success: function ( response ) {
                 try {
                     processaResposta(response);
@@ -31,7 +31,10 @@ var HistoricoTrimestral = (function($){
         var empresas = response.data.items;
         var dataArray = [];
         for (var i=0;i<empresas.length;i++) {
-            dataArray.push(geraTrace(empresas[i],i))
+            try {
+                dataArray.push(geraTrace(empresas[i],i))
+            } catch (e) {
+            }
         }
         data = dataArray;
     };
