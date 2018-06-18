@@ -11,7 +11,7 @@ var HistoricoTrimestral = (function($){
      */
     var init = function () {
         Main.consulta({
-            url: 'https://markets.ft.com/research/webservices/companies/v1/financialperformance?symbols=MSFT,IQ,AAPL,CMCSA,CSCO,MU,QQQ,INTC,SIRI,JD,AMAT,ENDP,FB,NAVI,DBX,FOXA,GERN,SQQQ,CZR,HBAN&period=a&numHistorical=400&source=' + Main.source,
+            url: 'https://markets.ft.com/research/webservices/companies/v1/financialperformance?symbols='+Main.symbols+'&period=a&numHistorical=400&source=' + Main.source,
             success: function ( response ) {
                 try {
                     processaResposta(response);
