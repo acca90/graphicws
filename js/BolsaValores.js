@@ -14,8 +14,23 @@ var BolsaValores = (function($) {
      * Inicialização do módulo
      */
     var init = function () {
+        $('#buscar').off('click').on('click', function () {
+            var nomeAcao = $('#nomeAcao').val();
+            if (nomeAcao != null) {
+                Plotly.purge('grafico');
+                buscar(nomeAcao);
+            } else {
+                Main.msgError("Informe uma ação para buscar sua localização");
+            }
+        });
+    };
+    /**
+     * Busca dados da ação
+     * @param acao
+     */
+    var buscar = function ( acao ) {
         Main.consulta({
-            url: 'https://markets.ft.com/research/webservices/companies/v1/issuelist?symbols='+Main.symbols+'&source=' + Main.source,
+            url: 'https://markets.ft.com/research/webservices/companies/v1/issuelist?symbols='+acao+'&source=' + Main.source,
             success: function ( response ) {
                 processaResposta(response);
                 run()
@@ -68,7 +83,7 @@ var BolsaValores = (function($) {
             if (i == arrayBolsas.length) {
                 arrayBolsas = tempArrayBolsas;
                 tempArrayBolsas.push(Main.isoCountries[ref]);
-                arrayValores.push(conta);
+                arrayValores.push(1);
                 break;
             }
             if (ref == "") {
@@ -76,7 +91,7 @@ var BolsaValores = (function($) {
                 conta = 1;
             } else if (ref != arrayBolsas[i]) {
                 tempArrayBolsas.push(Main.isoCountries[ref]);
-                arrayValores.push(conta);
+                arrayValores.push(1);
                 ref = arrayBolsas[i];
                 conta = 1;
             } else {
@@ -90,15 +105,20 @@ var BolsaValores = (function($) {
      */
     var run = function ( response ) {
         var layout = {
-            title: 'Pure alcohol consumption among adults (age 15+) in 2010',
+            title: 'Países que comercializam ações da empresa',
             geo: {
+                countrycolor: 'rgb(255, 255, 255)',
+                showland: true,
+                landcolor: 'rgb(217, 217, 217)',
+                subunitcolor: 'rgb(255, 255, 255)',
                 projection: {
                     showframe: false,
-                    showcoastlines: false,
+                    showcoastlines: true,
                     type: 'robinson'
                 }
             }
         };
+
 
         Plotly.plot('grafico', [{
             "type": "choropleth",

@@ -5,6 +5,15 @@
         <h4 class="mt-5">Dados sobre companhias</h4>
     </div>
     <div class="panel-body">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="nomeAcao">
+                    Informe o nome da ação para buscar sua localização
+                </label>
+                <input type="text" class="form-control" id="nomeAcao" placeholder="AAPL">
+            </div>
+            <button id="buscar" type="button" class="btn btn-primary">Buscar</button>
+        </form>
         <div id="grafico" class="col-md-12" style="height:600px;"></div>
     </div>
 </div>
