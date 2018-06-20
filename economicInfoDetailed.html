@@ -1,0 +1,28 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="mt-5">Histórico de Desempenho Financeiro</h4>
+    </div>
+    <br>
+    <div>
+    	<form class="form-inline">
+            <div class="form-group">
+                <label for="company">
+                    Company
+                </label>
+                <input type="text" class="form-control" id="company" placeholder="AAPL">
+            </div>
+            <button id="buscarEconomicInfoDetailed" type="button" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+    <div class="panel-body">
+        <div id="graficEconomicDetailed" class="col-md-12" style="height:600px;"></div>
+    </div>
+</div>
+
+
+<script type="application/javascript" src="js/EconomicInfoDetailed.js"></script>
+<script type="application/javascript">
+    $(document).ready(function () {    
+        EconomicInfoDetailed.init();
+    });
+</script>

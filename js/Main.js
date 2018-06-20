@@ -23,6 +23,9 @@ var Main = (function($){
         $('#graph3Link').on('click', function () {
             $cointainer.load('economicInfo.html');
         });
+        $('#graph5Link').on('click', function () {
+            $cointainer.load('economicInfoDetailed.html');
+        });
         $('#graph4Link').on('click', function () {
             $cointainer.load('BolsaValores.html');
         });
