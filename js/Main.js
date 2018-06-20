@@ -318,7 +318,7 @@ var Main = (function($){
         consulta: consulta,
         msgError: msgError,
         isoCountries: isoCountries,
-        symbols: 'PETR4',
+        symbols: 'PETR4,AAPL',
         source: '6c0f906945618c79'
     };
 })(jQuery);

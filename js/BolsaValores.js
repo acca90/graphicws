@@ -15,14 +15,25 @@ var BolsaValores = (function($) {
      */
     var init = function () {
         $('#buscar').off('click').on('click', function () {
-            var nomeAcao = $('#nomeAcao').val();
-            if (nomeAcao != null) {
-                Plotly.purge('grafico');
-                buscar(nomeAcao);
-            } else {
-                Main.msgError("Informe uma ação para buscar sua localização");
+            execSearch();
+        });
+        $('#nomeAcao').off('keyup').on('keyup', function (e) {
+            if (e.keyCode === 13) {
+                execSearch();
             }
         });
+    };
+    /**
+     * Executa busca
+     */
+    var execSearch = function () {
+        var nomeAcao = $('#nomeAcao').val();
+        if (nomeAcao != null) {
+            Plotly.purge('grafico');
+            buscar(nomeAcao);
+        } else {
+            Main.msgError("Informe uma ação para buscar sua localização");
+        }
     };
     /**
      * Busca dados da ação
@@ -83,7 +94,7 @@ var BolsaValores = (function($) {
             if (i == arrayBolsas.length) {
                 arrayBolsas = tempArrayBolsas;
                 tempArrayBolsas.push(Main.isoCountries[ref]);
-                arrayValores.push(1);
+                arrayValores.push(conta);
                 break;
             }
             if (ref == "") {
@@ -91,7 +102,7 @@ var BolsaValores = (function($) {
                 conta = 1;
             } else if (ref != arrayBolsas[i]) {
                 tempArrayBolsas.push(Main.isoCountries[ref]);
-                arrayValores.push(1);
+                arrayValores.push(conta);
                 ref = arrayBolsas[i];
                 conta = 1;
             } else {
@@ -109,7 +120,7 @@ var BolsaValores = (function($) {
             geo: {
                 countrycolor: 'rgb(255, 255, 255)',
                 showland: true,
-                landcolor: 'rgb(217, 217, 217)',
+                landcolor: 'rgb(117, 117, 117)',
                 subunitcolor: 'rgb(255, 255, 255)',
                 projection: {
                     showframe: false,
@@ -126,7 +137,14 @@ var BolsaValores = (function($) {
             "locations": arrayBolsas,
             "z": arrayValores,
             "text": arrayBolsas,
-            "autocolorscale": true
+            "colorscale": [
+                [0.4, 'rgb(242,240,247)'],
+                [0.5, 'rgb(218,218,235)'],
+                [0.6, 'rgb(188,189,220)'],
+                [0.7, 'rgb(158,154,200)'],
+                [0.8, 'rgb(117,107,177)'],
+                [1, 'rgb(84,39,143)']
+            ],
         }], layout, {showLink: false});
     };
     /**
