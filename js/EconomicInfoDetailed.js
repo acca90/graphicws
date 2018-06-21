@@ -111,7 +111,7 @@ var EconomicInfoDetailed = (function($){
         $('.panel-body').append(`<div id="dataTwo">${announcements.performanceAnnouncements.revenue.smartText}.</div>`);
         $('.panel-body').append(`<div id="dataThreeA">A previsão para 2018 é de ${forecastb}.</div>`);
         $('.panel-body').append(`<div id="dataThreeB">A previsão para 2019 é de ${forecast}.</div>`);
-        
+
     };
 
     /**
