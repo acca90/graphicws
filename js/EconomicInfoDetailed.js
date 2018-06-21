@@ -41,17 +41,17 @@ var EconomicInfoDetailed = (function($){
         var dados = response.data.items[0].performanceAnnouncements.revenue.announcements.historical;
         //console.log(dados);
 
-        var year = new Array();
-        var high = new Array();
-        var low = new Array();
-        var reported = new Array();
-        var open = new Array();
+        var year = [];
+        var high = [];
+        var low = [];
+        var reported = [];
+        var open = [];
 
         for (var i=0;i<dados.length;i++) {
             year.push(`${dados[i].year}`);
             high.push(dados[i].high);
             low.push(dados[i].low);
-            if(i = 0) {
+            if(i == 0) {
                 open.push(dados[i].reported - ((dados[i].reported * dados[i].percentChange) / 100));
             } else {
                 //TODO why this piece of shit doesn't work?
@@ -111,6 +111,8 @@ var EconomicInfoDetailed = (function($){
                 type: 'linear'
             }
         };
+
+        $('.panel-body').append('<div>hello</div>');
 
         Plotly.plot('graficEconomicDetailed', data, layout);
     };
