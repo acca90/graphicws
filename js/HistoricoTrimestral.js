@@ -5,13 +5,46 @@
  * @since 07/06/2018
  */
 var HistoricoTrimestral = (function($){
-    var data = null;
+    var data = [];
+    /**
+     * Init
+     */
+    var init = function () {
+        Plotly.newPlot('grafico', data);
+        $('#buscar').off('click').on('click', function () {
+            buscarAcao();
+        });
+        $('#nomeAcao').off('keyup').on('keyup', function (e) {
+            if (e.keyCode === 13) {
+                buscarAcao();
+            }
+        });
+        $('#limpar').off('click').on('click', function () {
+            $('#nomeAcao').val('');
+            data = [];
+            Plotly.newPlot('grafico', data);
+        });
+    };
+    /**
+     * Executa busca
+     */
+    var buscarAcao = function () {
+        $('#detalhes').html("");
+        var nomeAcao = $('#nomeAcao').val();
+        if (nomeAcao != null) {
+            incluirAcao(nomeAcao);
+        } else {
+            Main.msgError("Informe uma ação para consultar histórico");
+        }
+        $('#nomeAcao').val('');
+    };
     /**
      * Inicialização do módulo
      */
-    var init = function () {
+    var incluirAcao = function ( acao ) {
+        Plotly.purge('grafico');
         Main.consulta({
-            url: 'https://markets.ft.com/research/webservices/companies/v1/financialperformance?symbols='+Main.symbols+'&period=a&numHistorical=400&source=' + Main.source,
+            url: 'https://markets.ft.com/research/webservices/companies/v1/financialperformance?symbols='+acao+'&period=a&numHistorical=400&source=' + Main.source,
             success: function ( response ) {
                 try {
                     processaResposta(response);
@@ -32,11 +65,10 @@ var HistoricoTrimestral = (function($){
         var dataArray = [];
         for (var i=0;i<empresas.length;i++) {
             try {
-                dataArray.push(geraTrace(empresas[i],i))
+                data.push(geraTrace(empresas[i],i))
             } catch (e) {
             }
         }
-        data = dataArray;
     };
     /**
      * Gera trace de dados para empresa
@@ -51,7 +83,7 @@ var HistoricoTrimestral = (function($){
             x: getX(empresa.performanceAnnouncements.revenue.announcements),
             y: getY(empresa.performanceAnnouncements.revenue.announcements),
             line: {
-                color: getCor(index)
+                color: getCor(data.length)
             }
         }
     };

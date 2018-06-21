@@ -5,6 +5,16 @@
         <h4 class="mt-5">Histórico trimestral do valor de revenda de empresas</h4>
     </div>
     <div class="panel-body">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="nomeAcao">
+                    Informe a ação para buscar histórico de valor de mercado
+                </label>
+                <input type="text" class="form-control" id="nomeAcao" placeholder="AAPL">
+            </div>
+            <button id="buscar" type="button" class="btn btn-primary">Buscar</button>
+            <button id="limpar" type="button" class="btn btn-danger">Limpar</button>
+        </form>
         <div id="grafico" class="col-md-12" style="height:600px;"></div>
     </div>
 </div>
