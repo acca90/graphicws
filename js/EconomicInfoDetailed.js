@@ -10,25 +10,33 @@ var EconomicInfoDetailed = (function($){
         var dataIni, dataFim, pais;
 
         $('#buscarEconomicInfoDetailed').off('click').on('click', function () {
-            company = $('#company').val();
-        
+            company = $('#companyPerformance').val();
+            
+            if (company != null) {
+                Plotly.purge('graficEconomicDetailed');
+                Main.consulta({
+                    //https://markets.ft.com/research/webservices/companies/v1/financialperformance?symbols=pson:lse,mrkt&period=a&numHistorical=10&source=6c0f906945618c79
+                    url: `https://markets.ft.com/research/webservices/companies/v1/financialperformance?symbols=${company}&period=a&numHistorical=15&source=` + Main.source,
+                    success: function ( response ) {
+                        processaResposta(response);
+                    }
+                });
+            } else {
+                Main.msgError("Informe uma ação");
+            }
+
+
             /*dataIni = '2018-01-01';
             dataFim = '2018-05-01';
             pais = 'BR';
-*/
+            */
             //pais = new Array(); multiple=multiple .join(',')
             /*console.log("dataIni", dataIni);
             console.log("dataFim", dataFim);
             console.log("country", pais);*/
 
             //let source = '6c0f906945618c79';
-            Main.consulta({
-                //https://markets.ft.com/research/webservices/companies/v1/financialperformance?symbols=pson:lse,mrkt&period=a&numHistorical=10&source=6c0f906945618c79
-                url: `https://markets.ft.com/research/webservices/companies/v1/financialperformance?symbols=${company}&period=a&numHistorical=15&source=` + Main.source,
-                success: function ( response ) {
-                    processaResposta(response);
-                }
-            })
+            
 
         }); 
     };
@@ -38,7 +46,8 @@ var EconomicInfoDetailed = (function($){
      */
     var processaResposta = function ( response ) {
         //console.log("response", response);
-        var dados = response.data.items[0].performanceAnnouncements.revenue.announcements.historical;
+        var announcements = response.data.items[0];
+        var dados = announcements.performanceAnnouncements.revenue.announcements.historical;
         //console.log(dados);
 
         var year = [];
@@ -54,19 +63,10 @@ var EconomicInfoDetailed = (function($){
             if(i == 0) {
                 open.push(dados[i].reported - ((dados[i].reported * dados[i].percentChange) / 100));
             } else {
-                //TODO why this piece of shit doesn't work?
                 open.push(dados[reported.length-1].reported);
             }
             reported.push(dados[i].reported);
         }
-
-/*        for (var i=0;i<dados.length;i++) {
-            console.log(year[i]);
-            console.log(high[i]);
-            console.log(low[i]);
-            console.log(reported[i]);
-            console.log(open[i]);
-        }*/
 
         var trace1 = {
             x: year, 
@@ -97,7 +97,7 @@ var EconomicInfoDetailed = (function($){
             xaxis: {
                 autorange: true, 
                 domain: [0, 1], 
-                range: ['2017-01-03 12:00', '2017-02-15 12:00'], 
+                range: ['2001-01-03 12:00', '2017-02-15 12:00'], 
                 rangeslider: {
                     visible: false
                 },
@@ -112,7 +112,57 @@ var EconomicInfoDetailed = (function($){
             }
         };
 
-        $('.panel-body').append('<div>hello</div>');
+
+        
+        var name = announcements.basic.name;
+        var currency = announcements.basic.currency;
+        var exchange = announcements.basic.exchange;
+
+        $('.panel-body').append(`<div>${name} on ${exchange} with ${currency} as currency.</div>`);
+        $('.panel-body').append(`<div>${announcements.performanceAnnouncements.revenue.smartText}.</div>`);
+        $('.panel-body').append(`<div>A previsão para 2019 é de ${announcements.performanceAnnouncements.revenue.announcements.forecast[0].consensus}.</div>`);
+        
+
+
+
+
+/*
+        "symbolInput": "pson:lse",
+        "basic": {
+          "symbol": "PSON:LSE",
+          "name": "Pearson",
+          "exchange": "London Stock Exchange",
+          "exhangeCode": "LSE",
+          "bridgeExchangeCode": "GBL",
+          "currency": "GBp"
+        },
+        "performanceAnnouncements": {
+          "revTTM": 4513000000.0,
+          "lastYearEarnings": 401000000.0,
+          "revenue": {
+            "smartText": " Pearson plc had revenues for the full year 2017 of 4.51bn. This was 0.86% below the prior year's results.",
+            "avgPercentChange": "1.121149",
+            "announcements": {
+              "forecast": [
+                {
+                  "currencyCode": "GBP",
+                  "consensus": 4185668700.0,
+                  "high": 4761000000.0,
+                  "low": 3651000000.0,
+                  "numAnalysts": 17.0,
+                  "quarter": 0,
+                  "year": 2019
+                },
+                {
+                  "currencyCode": "GBP",
+                  "consensus": 4204659800.0000005,
+                  "high": 4714000000.0,
+                  "low": 3672314000.0,
+                  "numAnalysts": 16.0,
+                  "quarter": 0,
+                  "year": 2018
+                }
+                */
 
         Plotly.plot('graficEconomicDetailed', data, layout);
     };
