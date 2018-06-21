@@ -27,6 +27,7 @@ var BolsaValores = (function($) {
      * Executa busca
      */
     var execSearch = function () {
+        $('#detalhes').html("");
         var nomeAcao = $('#nomeAcao').val();
         if (nomeAcao != null) {
             Plotly.purge('grafico');
@@ -74,7 +75,21 @@ var BolsaValores = (function($) {
     var geraTrace = function ( empresa ) {
         for (var i=0;i<empresa.issues.length;i++) {
             arrayBolsas.push(empresa.issues[i].countryCode);
+            addLinhaTable(empresa.issues[i]);
         }
+    };
+    /**
+     * Inclui linha da ação na tabela
+     * @param issue
+     */
+    var addLinhaTable = function ( issue ) {
+        $('#detalhes').append(
+            "<tr>" +
+            "   <td>"+issue.exchange+"</td>" +
+            "   <td>"+issue.symbol+"</td>" +
+            "   <td>"+(issue.isPrimary ? "Ação Principal" : "Ação Secundária")+"</td>" +
+            "</tr>"
+        );
     };
     /**
      * Ordena array
